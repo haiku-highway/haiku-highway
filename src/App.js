@@ -1,23 +1,58 @@
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+import {useEffect} from 'react';
+
+// <Header />
+  // h1
+  // nav
+    //'how to' button
+
+// <HowTo />
+
+// <Credits />
+
+// <UserInput />
+  // form 
+    // label
+      // h2
+    // input
+
+// <DisplayHaiku />
+  // section
+    // hidden p with error message
+    // ul
+      // li * 3
+
+// <WordSelect />
+  // ul
+    // li *(as needed)
+      // button
+  // hidden div with no results message
+
+// <CompleteHaiku />
+  // button
 
 function App() {
+  useEffect(() => {
+    axios({
+      url: "https://api.datamuse.com/words",
+      method: "GET",
+      dataResponse: "json",
+      params: {
+        lc: "oranges",
+        md: "s",
+      }
+    }).then((res) => {
+      const wordArr = res.data;
+      wordArr.forEach((word) => {
+        console.log(word);
+      })
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
     </div>
   );
 }
