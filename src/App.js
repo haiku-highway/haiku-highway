@@ -1,25 +1,25 @@
-import logo from './logo.svg';
+import Header from './Components/Header';
+import UserInput from './Components/UserInput';
+import DisplayHaiku from './Components/DisplayHaiku';
+import WordSelect from './Components/WordSelect';
+// import CompleteHaiku from './Components/CompleteHaiku';
+// import HowTo from './Components/HowTo';
+// import Credits from './Components/Credits';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+
+	return (
+		<>
+			<Header />
+			<main>
+				<UserInput />
+				<DisplayHaiku />
+				<WordSelect />
+			</main>
+		</>
+	);
 }
 
 export default App;
