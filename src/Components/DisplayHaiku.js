@@ -1,3 +1,8 @@
+
+
+
+
+
 const DisplayHaiku = () => {
     return (
     <div>DisplayHaiku</div>
