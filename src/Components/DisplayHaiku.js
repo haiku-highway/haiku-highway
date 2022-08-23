@@ -6,7 +6,7 @@
 // As the line changes, display the next number of required syllables
 
 // each word selected by the user will be dynamically printed into a paragraph and rrrrrendered on page
-{/* <p>{haiku.line1.join(" ")</p> */}
+//{/* <p>{haiku.line1.join(" ")</p> */}
 
 const DisplayHaiku = () => {
     return (
