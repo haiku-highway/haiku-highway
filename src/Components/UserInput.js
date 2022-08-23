@@ -1,9 +1,3 @@
-
-
-
-
-
-
 const UserInput = () => {
     return (
     <div>UserInput</div>
