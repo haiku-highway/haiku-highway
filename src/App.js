@@ -59,8 +59,8 @@ const App = () => {
 			setHaikuObject((prev) => ({
 				...prev,
 				line1: [...prev.line1, userInput],
-		}));
-		setUserInput("");
+			}));
+			setUserInput("");
 		} else {
 			setTooManySyllables(true);
 		}
@@ -92,7 +92,7 @@ const App = () => {
 				<DisplayHaiku />
 				<WordSelect />
 				<form action="submit" onSubmit={getSyllables}>
-				<input type="text" value={userInput} onChange={handleInputChange} />
+					<input type="text" value={userInput} onChange={handleInputChange} />
 				</form>
 				{isValid ? null : <p>Please input only letter characters</p>}
 				{tooManySyllables ? <p>Enter a word with less syllables</p> : null}

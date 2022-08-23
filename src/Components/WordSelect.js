@@ -14,7 +14,7 @@
 
 const WordSelect = () => {
     return (
-    <div>WordSelect</div>
+        <div>WordSelect</div>
     )
 }
 
