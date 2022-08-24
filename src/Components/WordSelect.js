@@ -10,9 +10,37 @@
 // <button value={word} data-numSyllable={syllableCount}>{word}</button?
 // button.dataset.numSyllable
 
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const WordSelect = () => {
+    const [wordButton, setWordButton] = useState([])
+
+    useEffect(() => {
+        axios({
+            url: "https://api.datamuse.com/words",
+            method: "GET",
+            dataResponse: "json",
+            params: {
+                lc: 'cookie',
+                md: "s",
+            },
+        }).then((result) => {
+            let newWords = [];
+            for (let i = 0; i < 10; i++) {
+                const resultData = result.data
+                const resultLength = resultData.length
+                const selectedIndex = Math.floor(Math.random() * resultLength)
+                console.log(selectedIndex);
+                if (newWords.includes(resultData[selectedIndex])){
+                    i--
+                } else if (/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(resultData[selectedIndex])) {
+                    i--
+                }
+            }
+        });
+    })
+
     return (
         <div>WordSelect</div>
     )

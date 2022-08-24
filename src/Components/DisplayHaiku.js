@@ -8,9 +8,13 @@
 // each word selected by the user will be dynamically printed into a paragraph and rrrrrendered on page
 //{/* <p>{haiku.line1.join(" ")</p> */}
 
-const DisplayHaiku = () => {
+const DisplayHaiku = ( {haikuObject} ) => {
     return (
-    <div>DisplayHaiku</div>
+    <div>
+        <p>{haikuObject.line1.join(' ')}</p>
+        <p>{haikuObject.line2.join(' ')}</p>
+        <p>{haikuObject.line3.join(' ')}</p>
+    </div>
     )
 }
 

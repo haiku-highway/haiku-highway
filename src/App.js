@@ -88,14 +88,10 @@ const App = () => {
 		<>
 			<Header />
 			<main>
-				<UserInput />
-				<DisplayHaiku />
+				<UserInput userInput={userInput} isValid={isValid} tooManySyllables={tooManySyllables} handleInputChange={handleInputChange} getSyllables={getSyllables} /> 
+				<DisplayHaiku haikuObject={haikuObject} />
 				<WordSelect />
-				<form action="submit" onSubmit={getSyllables}>
-					<input type="text" value={userInput} onChange={handleInputChange} />
-				</form>
-				{isValid ? null : <p>Please input only letter characters</p>}
-				{tooManySyllables ? <p>Enter a word with less syllables</p> : null}
+				
 			</main>
 		</>
 	);
