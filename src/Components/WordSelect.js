@@ -13,37 +13,52 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const WordSelect = () => {
-    const [wordButton, setWordButton] = useState([])
+const WordSelect = ({mostRecentWord, handleWordButtonClick }) => {
+    const [wordButton, setWordButton] = useState([]);
 
     useEffect(() => {
+        if (mostRecentWord === "") { return };
         axios({
             url: "https://api.datamuse.com/words",
             method: "GET",
             dataResponse: "json",
             params: {
-                lc: 'cookie',
+                lc: mostRecentWord,
                 md: "s",
-            },
+            }
         }).then((result) => {
+            console.log(result.data)
             let newWords = [];
             for (let i = 0; i < 10; i++) {
-                const resultData = result.data
-                const resultLength = resultData.length
-                const selectedIndex = Math.floor(Math.random() * resultLength)
-                console.log(selectedIndex);
-                if (newWords.includes(resultData[selectedIndex])){
-                    i--
-                } else if (/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(resultData[selectedIndex])) {
-                    i--
+                const resultData = result.data;
+                const resultLength = resultData.length;
+                const selectedIndex = Math.floor(Math.random() * resultLength);
+                // console.log(selectedIndex);
+                if (resultData.length === 0) { return } 
+            
+                else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(resultData[selectedIndex].word)){
+                    i--;
+                    // console.log(newWords, "else if");
+                    // console.log(resultData[selectedIndex], "else if");
+                    resultData.splice(selectedIndex, 1);
+                } else {
+                    newWords.push(resultData[selectedIndex]);
+                    resultData.splice(selectedIndex, 1);
+                    // console.log(newWords);
                 }
             }
+            setWordButton(newWords);
+            console.log(newWords);
         });
-    })
+    }, [mostRecentWord]);
 
     return (
-        <div>WordSelect</div>
-    )
+        <>
+            {wordButton.map((wordObject) => {
+                return <button key={wordButton.indexOf(wordObject)} onClick={() => handleWordButtonClick(wordObject.numSyllables, wordObject.word)}>{wordObject.word}</button>;
+            })}
+        </>
+    );
 }
 
 export default WordSelect;

@@ -30,6 +30,9 @@ const App = () => {
 	// set State variable for tooManySyllables to check that word inputted is within syllable limit
 	const [tooManySyllables, setTooManySyllables] = useState(false);
 
+	// set state variable to hold the most recent word selected by the user
+	const [mostRecentWord, setMostRecentWord] = useState("");
+
 	// and if true add a function to check user input to verify user choice is usable.
 	// this function will be passed in props to userInput.js and wordSelect.js
 	// enable useEffect to update everytime the state variable changes
@@ -54,21 +57,30 @@ const App = () => {
 	};
 
 	const checkInput = (userInputSyllables) => {
-		console.log(userInputSyllables);
+		// console.log(userInputSyllables);
 		if (userInputSyllables <= 5 && userInput !== "") {
 			setHaikuObject((prev) => ({
 				...prev,
 				line1: [...prev.line1, userInput],
 			}));
+			updateCurrentWord(userInput);
 			setUserInput("");
 		} else {
 			setTooManySyllables(true);
 		}
-		console.log(haikuObject);
+		// console.log(haikuObject);
 	};
+
+	const updateHaikuObject = (selectedWord) => {
+		setHaikuObject((prev) => ({
+            ...prev,
+            line1: [...prev.line1, selectedWord],
+        }));
+	}
 
 	const getSyllables = (e) => {
 		e.preventDefault();
+		if (!userInput) { return };
 		axios({
 			url: "https://api.datamuse.com/words",
 			method: "GET",
@@ -77,22 +89,43 @@ const App = () => {
 				lc: userInput,
 				md: "s",
 				qe: "lc",
-			},
+			}
 		}).then((result) => {
 			checkInput(result.data[0].numSyllables);
-			console.log(result.data);
+			// console.log(result.data);
 		});
 	};
 
+	const updateCurrentWord = (currentWord) => {
+		setMostRecentWord(currentWord);
+	}
+
+	const handleWordButtonClick = (syllableNumber, selectedWord) => {
+		updateCurrentWord(selectedWord);
+		setSyllableCount(syllableCount + syllableNumber);
+		updateHaikuObject(selectedWord);
+	}
+
 	return (
-		<>
-			<Header />
-			<main>
-				<UserInput userInput={userInput} isValid={isValid} tooManySyllables={tooManySyllables} handleInputChange={handleInputChange} getSyllables={getSyllables} /> 
-				<DisplayHaiku haikuObject={haikuObject} />
-				<WordSelect />
-				
-			</main>
+    <>
+		<Header />
+		<main>
+			<UserInput
+				userInput={userInput}
+				isValid={isValid}
+				tooManySyllables={tooManySyllables}
+				handleInputChange={handleInputChange}
+				getSyllables={getSyllables}
+				updateCurrentWord={updateCurrentWord}
+			/>
+			<DisplayHaiku haikuObject={haikuObject} />
+			<WordSelect
+				userInput={userInput}
+				mostRecentWord={mostRecentWord}
+				updateCurrentWord={updateCurrentWord}
+				handleWordButtonClick={handleWordButtonClick}
+			/>
+		</main>
 		</>
 	);
 };
