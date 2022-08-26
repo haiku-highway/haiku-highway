@@ -73,7 +73,10 @@ const App = () => {
 		setUserInput(e.target.value);
 		setTooManySyllables(false);
 	};
-
+	const hideInput = () => {
+		const userInputFormEl = document.querySelector('.userInputForm')
+		userInputFormEl.classList.add('hide')
+	}
 	const checkInput = (userInputSyllables) => {
 		// console.log(userInputSyllables);
 		if (!isValid){
@@ -84,6 +87,7 @@ const App = () => {
 			updateCurrentWord(userInput);
 			setSyllableCount(syllableCount + userInputSyllables)
 			setUserInput("");
+			hideInput()
 		} else {
 			setTooManySyllables(true);
 		}
