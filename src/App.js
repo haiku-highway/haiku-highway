@@ -36,6 +36,7 @@ const App = () => {
 	const [currentLine, setCurrentLine] = useState(1)
 
 	const [syllablesRemaining, setSyllablesRemaining] = useState(5);
+
 	// and if true add a function to check user input to verify user choice is usable.
 	// this function will be passed in props to userInput.js and wordSelect.js
 	// enable useEffect to update everytime the state variable changes
@@ -82,7 +83,7 @@ const App = () => {
 		if (!isValid){
 			return
 		} 
-		if (userInputSyllables <= 5 && userInput !== "") {
+		if (userInputSyllables <= syllablesRemaining && userInput !== "") {
 			updateHaikuObject(userInput);
 			updateCurrentWord(userInput);
 			setSyllableCount(syllableCount + userInputSyllables)
@@ -135,20 +136,24 @@ const App = () => {
 		<Header />
 		<main>
 			<UserInput
-				userInput={userInput}
-				isValid={isValid}
-				tooManySyllables={tooManySyllables}
-				handleInputChange={handleInputChange}
-				getSyllables={getSyllables}
-				updateCurrentWord={updateCurrentWord}
+			userInput={userInput}
+			isValid={isValid}
+			tooManySyllables={tooManySyllables}
+			handleInputChange={handleInputChange}
+			getSyllables={getSyllables}
+			updateCurrentWord={updateCurrentWord}
 			/>
 			<DisplayHaiku haikuObject={haikuObject} />
 			<WordSelect
-				userInput={userInput}
-				mostRecentWord={mostRecentWord}
-				updateCurrentWord={updateCurrentWord}
-				handleWordButtonClick={handleWordButtonClick}
-				syllablesRemaining={syllablesRemaining}
+			userInput={userInput}
+			isValid={isValid}
+			tooManySyllables={tooManySyllables}
+			handleInputChange={handleInputChange}
+			getSyllables={getSyllables}
+			mostRecentWord={mostRecentWord}
+			updateCurrentWord={updateCurrentWord}
+			handleWordButtonClick={handleWordButtonClick}
+			syllablesRemaining={syllablesRemaining}
 			/>
 		</main>
 		</>

@@ -17,8 +17,42 @@ import Form from './Form'
 const WordSelect = ({ mostRecentWord, handleWordButtonClick, syllablesRemaining, getSyllables, isValid, tooManySyllables, userInput, handleInputChange }) => {
     const [wordButton, setWordButton] = useState([]);
 
+    const [noResults, setNoResults] = useState(false);
+
+    const populateWordButton = (resultData) => {
+        let newWords = [];
+        for (let i = 0; i < 10; i++) {
+            const resultLength = resultData.length;
+            const selectedIndex = Math.floor(Math.random() * resultLength);
+            if (resultData.length === 0) {
+            } else if (
+            !/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(
+                resultData[selectedIndex].word
+            )
+            ) {
+            i--;
+            resultData.splice(selectedIndex, 1);
+            } else if (
+            resultData[selectedIndex].numSyllables > syllablesRemaining
+            ) {
+            console.log(resultData[selectedIndex]);
+            resultData.splice(selectedIndex, 1);
+            i--;
+            } else {
+            newWords.push(resultData[selectedIndex]);
+            resultData.splice(selectedIndex, 1);
+            }
+        }
+        if (newWords.length === 0) {
+            setNoResults(true);
+            return;
+        }
+        setWordButton(newWords);
+    }
+
     useEffect(() => {
         if (mostRecentWord === "") { return };
+        setNoResults(false);
         axios({
             url: "https://api.datamuse.com/words",
             method: "GET",
@@ -28,37 +62,7 @@ const WordSelect = ({ mostRecentWord, handleWordButtonClick, syllablesRemaining,
                 md: "s",
             }
         }).then((result) => {
-            // console.log(result.data)
-            let newWords = [];
-            for (let i = 0; i < 10; i++) {
-                const resultData = result.data;
-                const resultLength = resultData.length;
-                const selectedIndex = Math.floor(Math.random() * resultLength);
-                console.log(resultData[selectedIndex]);
-                console.log(newWords)
-                // console.log(syllablesRemaining)
-                if (resultData.length === 0) {
-                    setWordButton(newWords)
-                    return
-                }
-            
-                else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(resultData[selectedIndex].word)){
-                    i--;
-                    // console.log(newWords, "else if");
-                    // console.log(resultData[selectedIndex], "else if");
-                    resultData.splice(selectedIndex, 1);
-                } else if(resultData[selectedIndex].numSyllables > syllablesRemaining){
-                    console.log(resultData[selectedIndex].numSyllables)
-                    resultData.splice(selectedIndex,1)
-                    i--
-                } else {
-                    newWords.push(resultData[selectedIndex]);
-                    resultData.splice(selectedIndex, 1);
-                    // console.log(newWords);
-                }
-            }
-            console.log(newWords)
-            setWordButton(newWords);
+            populateWordButton(result.data);
         });
     }, [mostRecentWord]);
 
@@ -67,7 +71,14 @@ const WordSelect = ({ mostRecentWord, handleWordButtonClick, syllablesRemaining,
             {wordButton.map((wordObject) => {
                 return <button key={wordButton.indexOf(wordObject)} onClick={() => handleWordButtonClick(wordObject.numSyllables, wordObject.word)}>{wordObject.word}</button>;
             })}
-            <Form getSyllables={getSyllables} isValid={isValid} tooManySyllables={tooManySyllables} userInput={userInput} handleInputChange={handleInputChange} />
+            { 
+                noResults ?
+                <>
+                    <Form getSyllables={getSyllables} isValid={isValid} tooManySyllables={tooManySyllables} userInput={userInput} handleInputChange={handleInputChange} className={"wordSelectForm"}/>
+                    <p>no results found, please add a word on the line above to continue</p>
+                </>
+                    : null
+            } 
         </>
     );
 }
