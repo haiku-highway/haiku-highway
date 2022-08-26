@@ -13,7 +13,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const WordSelect = ({mostRecentWord, handleWordButtonClick }) => {
+const WordSelect = ({ mostRecentWord, handleWordButtonClick, syllablesRemaining }) => {
     const [wordButton, setWordButton] = useState([]);
 
     useEffect(() => {
@@ -27,13 +27,14 @@ const WordSelect = ({mostRecentWord, handleWordButtonClick }) => {
                 md: "s",
             }
         }).then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             let newWords = [];
             for (let i = 0; i < 10; i++) {
                 const resultData = result.data;
                 const resultLength = resultData.length;
                 const selectedIndex = Math.floor(Math.random() * resultLength);
-                // console.log(selectedIndex);
+                console.log(resultData[selectedIndex]);
+                console.log(syllablesRemaining)
                 if (resultData.length === 0) { return } 
             
                 else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(resultData[selectedIndex].word)){
@@ -41,6 +42,9 @@ const WordSelect = ({mostRecentWord, handleWordButtonClick }) => {
                     // console.log(newWords, "else if");
                     // console.log(resultData[selectedIndex], "else if");
                     resultData.splice(selectedIndex, 1);
+                } else if(resultData[selectedIndex].numSyllables > syllablesRemaining){
+                    resultData.splice(selectedIndex,1)
+                    i--
                 } else {
                     newWords.push(resultData[selectedIndex]);
                     resultData.splice(selectedIndex, 1);

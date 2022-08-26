@@ -33,6 +33,9 @@ const App = () => {
 	// set state variable to hold the most recent word selected by the user
 	const [mostRecentWord, setMostRecentWord] = useState("");
 
+	const [currentLine, setCurrentLine] = useState(1)
+
+	const [syllablesRemaining, setSyllablesRemaining] = useState(5);
 	// and if true add a function to check user input to verify user choice is usable.
 	// this function will be passed in props to userInput.js and wordSelect.js
 	// enable useEffect to update everytime the state variable changes
@@ -48,6 +51,21 @@ const App = () => {
 		setIsValid(/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(userInput));
 	}, [userInput]);
 
+
+	useEffect(() => {
+		if (syllableCount >= 17){
+			return
+		} else if (syllableCount >= 12){
+			setCurrentLine(3)
+			setSyllablesRemaining(17 - syllableCount)
+		} else if (syllableCount >= 5){
+			setCurrentLine(2)
+			setSyllablesRemaining(12 - syllableCount)
+		} else{
+			setSyllablesRemaining(5 - syllableCount)
+			setCurrentLine(1)
+		}
+	},[syllableCount]);
 	// When user submits onSubmit (and the word is accepted) if !isValid stop the submit. call the checkInput function and useState to make API call
 	// second API call and store the amount of syllables in state to be used again and passed down to future word selections
 
@@ -58,12 +76,13 @@ const App = () => {
 
 	const checkInput = (userInputSyllables) => {
 		// console.log(userInputSyllables);
+		if (!isValid){
+			return
+		} 
 		if (userInputSyllables <= 5 && userInput !== "") {
-			setHaikuObject((prev) => ({
-				...prev,
-				line1: [...prev.line1, userInput],
-			}));
+			updateHaikuObject(userInput);
 			updateCurrentWord(userInput);
+			setSyllableCount(syllableCount + userInputSyllables)
 			setUserInput("");
 		} else {
 			setTooManySyllables(true);
@@ -72,9 +91,10 @@ const App = () => {
 	};
 
 	const updateHaikuObject = (selectedWord) => {
+		const line = `line${currentLine}`
 		setHaikuObject((prev) => ({
             ...prev,
-            line1: [...prev.line1, selectedWord],
+            [line]: [...prev[line], selectedWord],
         }));
 	}
 
@@ -124,6 +144,7 @@ const App = () => {
 				mostRecentWord={mostRecentWord}
 				updateCurrentWord={updateCurrentWord}
 				handleWordButtonClick={handleWordButtonClick}
+				syllablesRemaining={syllablesRemaining}
 			/>
 		</main>
 		</>
