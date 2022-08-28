@@ -64,7 +64,7 @@ const WordSelect = ({ mostRecentWord, handleWordButtonClick, syllablesRemaining,
         }).then((result) => {
             populateWordButton(result.data);
         });
-    }, [mostRecentWord]);
+    }, [mostRecentWord]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>
