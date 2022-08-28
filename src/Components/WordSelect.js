@@ -10,61 +10,57 @@
 // <button value={word} data-numSyllable={syllableCount}>{word}</button?
 // button.dataset.numSyllable
 
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Form from './Form'
 
-const WordSelect = ({ mostRecentWord, handleWordButtonClick, syllablesRemaining, getSyllables, isValid, tooManySyllables, userInput, handleInputChange }) => {
-    const [wordButton, setWordButton] = useState([]);
+const WordSelect = ({ handleWordButtonClick, getSyllables, isValid, tooManySyllables, userInput, handleInputChange, noResults, wordButton }) => {
+    // const [wordButton, setWordButton] = useState([]);
 
-    const [noResults, setNoResults] = useState(false);
+    // const [noResults, setNoResults] = useState(false);
 
-    const populateWordButton = (resultData) => {
-        let newWords = [];
-        for (let i = 0; i < 10; i++) {
-            const resultLength = resultData.length;
-            const selectedIndex = Math.floor(Math.random() * resultLength);
-            if (resultData.length === 0) {
-            } else if (
-            !/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(
-                resultData[selectedIndex].word
-            )
-            ) {
-            i--;
-            resultData.splice(selectedIndex, 1);
-            } else if (
-            resultData[selectedIndex].numSyllables > syllablesRemaining
-            ) {
-            console.log(resultData[selectedIndex]);
-            resultData.splice(selectedIndex, 1);
-            i--;
-            } else {
-            newWords.push(resultData[selectedIndex]);
-            resultData.splice(selectedIndex, 1);
-            }
-        }
-        if (newWords.length === 0) {
-            setNoResults(true);
-            return;
-        }
-        setWordButton(newWords);
-    }
+    // const populateWordButton = (resultData) => {
+    //     if (mostRecentWord === "") { return };
+    //         setNoResults(false);
+    //         axios({
+    //             url: "https://api.datamuse.com/words",
+    //             method: "GET",
+    //             dataResponse: "json",
+    //             params: {
+    //                 lc: mostRecentWord,
+    //                 md: "s",
+    //             }
+    //         }).then((result) => {
+    //             populateWordButton(result.data);
+    //         });
 
-    useEffect(() => {
-        if (mostRecentWord === "") { return };
-        setNoResults(false);
-        axios({
-            url: "https://api.datamuse.com/words",
-            method: "GET",
-            dataResponse: "json",
-            params: {
-                lc: mostRecentWord,
-                md: "s",
-            }
-        }).then((result) => {
-            populateWordButton(result.data);
-        });
-    }, [mostRecentWord]) // eslint-disable-line react-hooks/exhaustive-deps
+    //     let newWords = [];
+    //     for (let i = 0; i < 10; i++) {
+    //         const resultLength = resultData.length;
+    //         const selectedIndex = Math.floor(Math.random() * resultLength);
+    //         if (resultData.length === 0) {
+    //         } else if (
+    //         !/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(
+    //             resultData[selectedIndex].word
+    //         )
+    //         ) {
+    //         i--;
+    //         resultData.splice(selectedIndex, 1);
+    //         } else if (
+    //         resultData[selectedIndex].numSyllables > syllablesRemaining
+    //         ) {
+    //         console.log(resultData[selectedIndex]);
+    //         resultData.splice(selectedIndex, 1);
+    //         i--;
+    //         } else {
+    //         newWords.push(resultData[selectedIndex]);
+    //         resultData.splice(selectedIndex, 1);
+    //         }
+    //     }
+    //     if (newWords.length === 0) {
+    //         setNoResults(true);
+    //         return;
+    //     }
+    //     setWordButton(newWords);
+    // }
 
     return (
         <>
