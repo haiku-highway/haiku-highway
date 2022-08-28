@@ -8,55 +8,242 @@ import WordSelect from "./WordSelect";
 import { FaSpinner } from 'react-icons/fa';
 
 const Home = () => {
-	// Create one state to hold the haiku object that would hold 3 lines, each containing an array of user-selected words (correct syllables)
-	// Then we'll be able to push each word into an array on each line
+    // STATE VARIABLES
+    // to store the user's haiku
+        // update as user selects/inputs new words
 	const [haikuObject, setHaikuObject] = useState({
 		line1: [],
 		line2: [],
 		line3: [],
 	});
 
-	// Create another state that will hold the syllable count. taking into account 5-7-5 with the target increasing cumulatively with each line (5-12-17)
+    // store the current number of syllables in the user's haiku
 	const [syllableCount, setSyllableCount] = useState(0);
 
-	// Set state variable for the input
+    // state variable for the controlled user input
 	const [userInput, setUserInput] = useState("");
 
-	// set State variable for isValid that checks validity of input
+    // boolean value dependent on the validity of the user's input
 	const [isValid, setIsValid] = useState(true);
 
-	// set State variable for tooManySyllables to check that word inputted is within syllable limit
+    // boolean value dependent on the amount of syllables in the user's input
+        // is true if the user's input has more syllables than remain in the current line of the haiku
 	const [tooManySyllables, setTooManySyllables] = useState(false);
 
-	const [currentLine, setCurrentLine] = useState(1);
-
-	const [syllablesRemaining, setSyllablesRemaining] = useState(5);
-
-	const [wordButton, setWordButton] = useState([]);
-
+    // boolean value that updates if the the api returns no valid results
     const [noResults, setNoResults] = useState(false);
 
+    // updates to show the user which line they are currently on and where new words will be displayed
+	const [currentLine, setCurrentLine] = useState(1);
+
+    // the amount of syllables remaining in the current line
+	const [syllablesRemaining, setSyllablesRemaining] = useState(5);
+
+    // array of word objects that is used to display the word options based on the most recent word as buttons
+	const [wordButton, setWordButton] = useState([]);
+    
+    // boolean value that updates dependent on the loading state (while the api call is in progress)
 	const [isLoading, setIsLoading] = useState(false);
 
+    // updates to true after the first word is submitted
+        // toggle the UserInput display based on this value
     const [hasFirstWord, setHasFirstWord] = useState(false);
+    
+    // STEP 1
+    // function to handle the user's form input
+    const handleInputChange = (e) => {
+        // set userInput state variable to the input value
+        setUserInput(e.target.value);
+        // remove the error message if the user had previously submitted a word with too many syllables
+        setTooManySyllables(false);
+    };
 
-	// and if true add a function to check user input to verify user choice is usable.
-	// this function will be passed in props to userInput.js and wordSelect.js
-	// enable useEffect to update everytime the state variable changes
-	// if user selection is null then don't allow submit
-	// use ternary statement to alert user if word selection is not usable. And make another selection
-	// [word].match(^(?=.*?[A-Za-z])[A-Za-z+]+$) to check viabilty of user selection
-	// If user selection does match the regex allow them to proceed and sets isValid to true.
-	// if does not match set isValid to false and give them an error
+    // STEP 1a
+    // when user inputs a new character...
 	useEffect(() => {
+        // if the user has removed any characters from the input
 		if (userInput === "") {
+            // exit the useEffect
 			return;
 		}
+        // otherwise...
+        // check validity of the user's input (only allow lowercase and uppercase alphabetical characters)
+            // error will be dispayed if the input is not valid
 		setIsValid(/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(userInput));
 	}, [userInput]);
 
+    // STEP 2
+    // When the user submits their form input...
+    const getSyllables = (e) => {
+        // prevent the default submit behaviour
+        e.preventDefault();
 
+        // if the user's input is blank...
+        if (!userInput) { 
+            // exit the function
+            return;
+        }
+
+        // show the loading state
+        setIsLoading(true);
+
+        // make api call to get the syllable count of the user's inputted word
+        axios({
+            url: "https://api.datamuse.com/words",
+            method: "GET",
+            dataResponse: "json",
+            params: {
+                lc: userInput,
+                md: "s",
+                qe: "lc",
+            }
+        }).then((result) => {
+            // call the checkInput function with the user input's number of syllables returned by the api as a argument
+            checkInput(result.data[0].numSyllables);
+        });
+    };
+
+    // STEP 3
+    // When the api call in getSyllables returns the number of syllables based on the user's input...
+    const checkInput = (userInputSyllables) => {
+
+        // check to see if the user's input is valid, if not...
+        if (!isValid){
+            // stop the loading state
+            setIsLoading(false);
+            // exit the function
+            return;
+        } 
+
+        // check to see if the userInput is not empty and the user input's syllable count is less than or equal to the remaining syllables on that line, if both conditions are true...
+        if (userInputSyllables <= syllablesRemaining && userInput !== "") {
+            // update the haiku object to display the new word
+            updateHaikuObject(userInput);
+            // update the syllable count by adding the new word's syllable count
+            setSyllableCount(syllableCount + userInputSyllables);
+            // clear the form input
+            setUserInput("");
+            // and let state know that the first word has been submitted
+            setHasFirstWord(true);
+            // create new word buttons based on the new word
+            populateWordButton(userInput);
+        // otherwise...
+        } else {
+            // show the error message that there are too many syllables in the user's input
+            setTooManySyllables(true);
+            // stop the loading state
+            setIsLoading(false);
+        }
+    };
+    
+    // STEP 4
+    // function to update the displayed haiku
+    const updateHaikuObject = (selectedWord) => {
+        // check to see if current line is falsy (the current line in state is set to null if the haiku has been completed)
+        if (!currentLine) {
+            // exit the function
+            return;
+        }
+
+        // create a variable that will be used to update the appropriate line in the haiku object
+        const line = `line${currentLine}`;
+        // use the haiku object's previous state to set the new state of the haiku object by...
+            // use the spread operator to destructure the previous state so that the haiku lines that will not be updated are placed back into the haiku object
+            // then use the line variable to update the appropriate line in the haiku object with the user's selected appended to the previous array in that line of the haiku
+        setHaikuObject((prev) => ({
+            ...prev,
+            [line]: [...prev[line], selectedWord],
+        }));
+    }
+
+    // STEP 5
+    // function to populate the word option button for the user to select from
+    const populateWordButton = (mostRecentWord) => {
+        // checks to see if the haiku is complete, if it is...
+        if (syllableCount >= 17) {
+            // remove the word buttons from the page
+            setWordButton([]);
+            // exit the function
+            return;
+        }
+
+        // display the loading state
+        setIsLoading(true);
+        // if the user had previously selected/inputted a word that returned no results from the api...
+            // remove the error and the form input
+        setNoResults(false);
+
+        // make a call to the api for a list of words that commonly follow the user's selected/inputted word
+        // this list of word objects will be used to populate the buttons that the user can use to select the next word
+        axios({
+            url: "https://api.datamuse.com/words",
+            method: "GET",
+            dataResponse: "json",
+            params: {
+                lc: mostRecentWord,
+                md: "s",
+            }
+        }).then((result) => {
+            // create a variable to store the api's results
+            const resultData = result.data;
+            // create a placeholder variable that will store an array of word objects (to be used when setting the state of the word buttons variable)
+            let newWords = [];
+            
+            // loop over the result data 10 times...
+            for (let i = 0; i < 10; i++) {
+
+                // variable to store the length of the result data array
+                const resultLength = resultData.length;
+                // variable to store a randomly selected index based on the length of the result data array
+                const selectedIndex = Math.floor(Math.random() * resultLength);
+                // variable to store the selected result (based on the random index)
+                const selectedResult = resultData[selectedIndex];
+
+                // if the api returns no results...
+                if (resultLength === 0) {
+                    // do nothing
+
+                // otherwise, if the word that has been randomly selected from the result data is not valid (contains non-alphabetical characters), OR...
+                // the randomly selected word has a syllable count higher than the amount of syllables remaining on the current line of the haiku...
+                } else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(selectedResult.word) || selectedResult.numSyllables > syllablesRemaining) {
+                    // remove the randomly selected word from the result data array
+                    resultData.splice(selectedIndex, 1);
+                    // run the loop one extra time
+                    i--;
+
+                // otherwise...
+                } else {
+                    // add the randomly selected word to the placeholder array that stores the word objects
+                    newWords.push(selectedResult);
+                    // remove the randomly selected word from the result data array
+                    resultData.splice(selectedIndex, 1);
+                }
+            }
+
+            // once the loop has finished...
+
+            // check to see if the length of the placeholder array that stores the word objects contains no objects, if it does...
+            if (newWords.length === 0) {
+                // alert the user that no results were found and show the form input so that they can input a new filler word
+                setNoResults(true);
+                // remove the loading state
+                setIsLoading(false);
+                // exit the function
+                return;
+            }
+
+            // if the api returned valid words...
+            // set the state of the variable that contains the words to be used when populating the word buttons
+            setWordButton(newWords);
+            // remove the loading state
+            setIsLoading(false);
+        });
+    }
+
+    // STEP 6
+    // when the syllable count is updated in state
 	useEffect(() => {
+        // use the updated syllables count to determine which line the user is on and how many syllables are remaining on the current line of the haiku
 		if (syllableCount >= 17){
 			setCurrentLine(null);
 			return;
@@ -70,123 +257,18 @@ const Home = () => {
 			setSyllablesRemaining(5 - syllableCount);
 			setCurrentLine(1);
 		}
-	},[syllableCount]);
-	// When user submits onSubmit (and the word is accepted) if !isValid stop the submit. call the checkInput function and useState to make API call
-	// second API call and store the amount of syllables in state to be used again and passed down to future word selections
+	}, [syllableCount]);
 
-	const handleInputChange = (e) => {
-		setUserInput(e.target.value);
-		setTooManySyllables(false);
-	};
-
-
-	const checkInput = (userInputSyllables) => {
-		if (!isValid){
-			setIsLoading(false);
-			return;
-		} 
-		if (userInputSyllables <= syllablesRemaining && userInput !== "") {
-			updateHaikuObject(userInput);
-			populateWordButton(userInput);
-			setSyllableCount(syllableCount + userInputSyllables);
-			setUserInput("");
-			setHasFirstWord(true);
-		} else {
-			setTooManySyllables(true);
-			setIsLoading(false);
-		}
-	};
-
-	const updateHaikuObject = (selectedWord) => {
-		if (!currentLine) {
-			return;
-		}
-		const line = `line${currentLine}`
-		setHaikuObject((prev) => ({
-            ...prev,
-            [line]: [...prev[line], selectedWord],
-        }));
-	}
-
-	const getSyllables = (e) => {
-		e.preventDefault();
-		if (!userInput) { 
-			return;
-		}
-
-		setIsLoading(true);
-
-		axios({
-			url: "https://api.datamuse.com/words",
-			method: "GET",
-			dataResponse: "json",
-			params: {
-				lc: userInput,
-				md: "s",
-				qe: "lc",
-			}
-		}).then((result) => {
-			checkInput(result.data[0].numSyllables);
-		});
-	};
-
+    // STEP 7
+    // function to be called when a user clicks on a word option button
 	const handleWordButtonClick = (syllableNumber, selectedWord) => {
+        // update the syllable count by adding the selected word's syllable count to the previous syllable count
 		setSyllableCount(syllableCount + syllableNumber);
+        // add the selected word to the haiku
 		updateHaikuObject(selectedWord);
+        // create a new set of word buttons based on the user's selected word
 		populateWordButton(selectedWord);
 	}
-
-	const populateWordButton = (mostRecentWord) => {
-		if (syllableCount >= 17) {
-			setWordButton([]);
-			return;
-		}
-
-        if (mostRecentWord === "") { 
-			return;
-		};
-
-		setIsLoading(true);
-        setNoResults(false);
-
-		axios({
-			url: "https://api.datamuse.com/words",
-			method: "GET",
-			dataResponse: "json",
-			params: {
-				lc: mostRecentWord,
-				md: "s",
-			}
-		}).then((result) => {
-			const resultData = result.data;
-			let newWords = [];
-			for (let i = 0; i < 10; i++) {
-					const resultLength = resultData.length;
-					const selectedIndex = Math.floor(Math.random() * resultLength);
-					console.log(syllablesRemaining);
-				if (resultData.length === 0) {
-				} else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(resultData[selectedIndex].word)) {
-					i--;
-					resultData.splice(selectedIndex, 1);
-				} else if (resultData[selectedIndex].numSyllables > syllablesRemaining) {
-					resultData.splice(selectedIndex, 1);
-					i--;
-				} else {
-					newWords.push(resultData[selectedIndex]);
-					resultData.splice(selectedIndex, 1);
-				}
-			}
-			if (newWords.length === 0) {
-				setNoResults(true);
-				setIsLoading(false);
-				return;
-			}
-
-			setWordButton(newWords);
-			setIsLoading(false);
-		});
-    }
-
 
 	return (
         <>
