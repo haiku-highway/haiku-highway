@@ -126,7 +126,7 @@ const Home = () => {
             // and let state know that the first word has been submitted
             setHasFirstWord(true);
             // create new word buttons based on the new word
-            populateWordButton(userInput);
+            populateWordButton(userInput, 0);
         // otherwise...
         } else {
             // show the error message that there are too many syllables in the user's input
@@ -158,12 +158,8 @@ const Home = () => {
 
     // STEP 5
     // function to populate the word option button for the user to select from
-    const populateWordButton = (mostRecentWord) => {
-        // checks to see if the haiku is complete, if it is...
-        if (syllableCount >= 17) {
-            // remove the word buttons from the page
-            setWordButton([]);
-            // exit the function
+    const populateWordButton = (mostRecentWord, syllablesAdded) => {
+        if (syllableCount + syllablesAdded >= 17) {
             return;
         }
 
@@ -205,13 +201,18 @@ const Home = () => {
 
                 // otherwise, if the word that has been randomly selected from the result data is not valid (contains non-alphabetical characters), OR...
                 // the randomly selected word has a syllable count higher than the amount of syllables remaining on the current line of the haiku...
-                } else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(selectedResult.word) || selectedResult.numSyllables > syllablesRemaining) {
+                } else if (selectedResult.numSyllables > (syllablesRemaining - syllablesAdded) && (syllablesRemaining - syllablesAdded) > 0) {
                     // remove the randomly selected word from the result data array
                     resultData.splice(selectedIndex, 1);
                     // run the loop one extra time
                     i--;
 
                 // otherwise...
+                } else if (!/^(?=.*?[A-Za-z])[A-Za-z+]+$/.test(selectedResult.word)) {
+                    // remove the randomly selected word from the result data array
+                    resultData.splice(selectedIndex, 1);
+                    // run the loop one extra time
+                    i--;
                 } else {
                     // add the randomly selected word to the placeholder array that stores the word objects
                     newWords.push(selectedResult);
@@ -243,9 +244,11 @@ const Home = () => {
     // STEP 6
     // when the syllable count is updated in state
 	useEffect(() => {
+        
         // use the updated syllables count to determine which line the user is on and how many syllables are remaining on the current line of the haiku
 		if (syllableCount >= 17){
 			setCurrentLine(null);
+            setWordButton([]);
 			return;
 		} else if (syllableCount >= 12){
 			setCurrentLine(3);
@@ -267,7 +270,7 @@ const Home = () => {
         // add the selected word to the haiku
 		updateHaikuObject(selectedWord);
         // create a new set of word buttons based on the user's selected word
-		populateWordButton(selectedWord);
+		populateWordButton(selectedWord, syllableNumber);
 	}
 
 	return (
