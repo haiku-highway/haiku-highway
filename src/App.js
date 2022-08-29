@@ -5,11 +5,12 @@ import Credits from './Components/Credits';
 import { Routes, Route } from 'react-router-dom';
 
 import "./App.css";
+import "./AppSecondary.css";
 
 const App = () => {
 	
 	return (
-        <>
+        <div className="wrapper">
 			<Header />
 			
 			<Routes>
@@ -17,7 +18,7 @@ const App = () => {
 				<Route path="/howto" element={ <HowTo /> } />
 				<Route path="/credits" element={ <Credits /> } />
 			</Routes>
-		</>
+		</div>
 	);
 };
 
