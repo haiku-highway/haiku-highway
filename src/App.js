@@ -5,11 +5,12 @@ import Credits from './Components/Credits';
 import { Routes, Route } from 'react-router-dom';
 
 import "./App.css";
+import "./AppSecondary.css";
 
 const App = () => {
 	
 	return (
-        <div className='wrapper'>
+    <div className='wrapper'>
 			<Header />
 			
 			<Routes>

@@ -5,16 +5,31 @@ const WordSelect = ({ handleWordButtonClick, getSyllables, isValid, tooManySylla
     return (
         <section className='wordSelect'>
 
-            {wordButton.map((wordObject) => {
-                return <button key={wordButton.indexOf(wordObject)} onClick={() => handleWordButtonClick(wordObject.numSyllables, wordObject.word)}>{wordObject.word}</button>;
-            })}
+            <div className="wordButtonContainer">
+                {wordButton.map((wordObject) => {
+                    return (
+                        <button
+                        key={wordButton.indexOf(wordObject)}
+                        onClick={() =>
+                            handleWordButtonClick(
+                            wordObject.numSyllables,
+                            wordObject.word
+                            )
+                        }
+                        className="wordButton"
+                        >
+                        {wordObject.word}
+                        </button>
+                    );
+                })}
+                </div>
 
             { 
                 noResults ?
-                <>
+                <div className="wordSelectFormContainer">
                     <Form getSyllables={getSyllables} isValid={isValid} tooManySyllables={tooManySyllables} userInput={userInput} handleInputChange={handleInputChange} className={"wordSelectForm"}/>
                     <p className='errorMessage'>no results found, please add a word on the line above to continue</p>
-                </>
+                </div>
                 : null
             } 
 

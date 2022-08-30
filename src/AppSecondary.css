@@ -1,0 +1,63 @@
+
+.wrapper {
+    max-width: 1240px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.smallPaper {
+    background-image: url(../assets/torn-paper-1.png) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 600px;
+    width: 90%;
+    min-height: 380px;
+    margin: 0 auto;
+}
+
+.smallPaperText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    width: 100%;
+    padding: 50px;
+}
+
+.smallPaperText p {
+    position: relative;
+    text-align: left;
+    font-size: 1.2rem;
+    line-height: 2rem;
+}
+
+.smallPaperText span {
+    position: absolute;
+    top: 5px;
+    left: -20px;
+}
+
+.wordButtonContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.wordSelect .errorMessage {
+    margin-top: 20px;
+}
+
+.wordSelectFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 425px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 2rem;
+}
