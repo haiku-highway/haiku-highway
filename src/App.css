@@ -97,10 +97,12 @@ input:focus {
 
 .largePaper {
     background-image: url(../assets/large-torn-paper.png);
+    background-repeat: no-repeat;
     max-width: 920px;
     width: 90%;
     min-height: 550px;
     margin: 0 auto;
+    background-size: cover;
 }
 
 /* Header Styles */
@@ -175,5 +177,5 @@ header a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
 }
