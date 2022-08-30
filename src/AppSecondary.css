@@ -1,37 +1,63 @@
 
 .wrapper {
     max-width: 1240px;
-    width: 50%;
+    width: 90%;
     margin: 0 auto;
 }
 
-.haikuDisplay {
-    /* position: relative; */
-    background: url(../assets/torn-paper-1.png) no-repeat center center;
-    height: 280px;
-    margin-top: 70px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* padding-bottom: 60px; */
-    /* padding: 0 350px; */
+.smallPaper {
+    background-image: url(../assets/torn-paper-1.png) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 600px;
+    width: 90%;
+    min-height: 380px;
+    margin: 0 auto;
 }
 
-.haikuContainer {
+.smallPaperText {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: left;
     width: 100%;
-    padding-bottom: 50px;
-    padding-left: 50px;
-    /* position: absolute; */
-    /* left: 200px;
-    top: 50px; */
+    padding: 50px;
 }
 
-.haikuContainer p {
+.smallPaperText p {
+    position: relative;
     text-align: left;
+    font-size: 1.2rem;
+    line-height: 2rem;
 }
 
+.smallPaperText span {
+    position: absolute;
+    top: 5px;
+    left: -20px;
+}
+
+.wordButtonContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.wordSelect .errorMessage {
+    margin-top: 20px;
+}
+
+.wordSelectFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 425px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 2rem;
+}

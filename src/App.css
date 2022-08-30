@@ -48,8 +48,11 @@ ul {
 }
 
 button {
+
     padding: 8px 15px 5px 15px;
-    border: 0.4px 0.75px 0.75px 0.4px solid black;
+    border: 1px solid black;
+    border-top-width: 0.4px;
+    border-left-width: 0.4px;
 
     background-color: white;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
@@ -57,6 +60,8 @@ button {
     font-family: inherit;
 
     cursor: pointer;
+    
+    margin: 10px;
 } 
 
 input {
