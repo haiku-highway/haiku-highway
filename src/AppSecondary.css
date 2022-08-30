@@ -44,10 +44,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
+}
+
+.wordSelect {
+    margin-bottom: 100px;
 }
 
 .wordSelect .errorMessage {
-    margin-top: 20px;
+    margin-top: 20px;   
+    text-align: center;
+    top: -75px;
+    width: 100%;
 }
 
 .wordSelectFormContainer {
@@ -56,8 +64,18 @@
     justify-content: center;
     align-items: center;
     width: 90%;
-    max-width: 425px;
+    max-width: 600px;
     margin: 0 auto;
     text-align: center;
     line-height: 2rem;
+}
+
+.form {
+    position: relative;
+    width: 100%;
+}
+
+.form .errorMessage {
+    position: absolute;
+
 }

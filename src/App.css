@@ -70,6 +70,10 @@ button {
     margin: 0 auto;
 }
 
+form {
+    position: relative;
+}
+
 
 input {
     width: 300px;
@@ -178,4 +182,37 @@ header a {
     flex-direction: column;
     align-items: center;
 
+}
+
+/* User Input */
+
+/* .userInput {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+
+} */
+
+.userInput {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 135px;
+    justify-content: space-between;
+    margin-top: 25px;
+    margin-bottom: 100px;
+    text-align: center;
+    transition: .5s;
+}
+
+.slide {
+    height: auto !important;
+}
+
+.userInput .errorMessage {
+    bottom: -40px;
+    width: 100%;
 }
