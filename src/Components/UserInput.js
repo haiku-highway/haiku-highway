@@ -2,10 +2,9 @@ import Form from './Form';
 
 const UserInput = ( {isValid, tooManySyllables, userInput, handleInputChange, getSyllables, hasFirstWord } ) => {
     return (
-        <section className={hasFirstWord ? "userInput slide" : "userInput"}>
+        <section className="userInput">
         {   
             hasFirstWord ?
-            
                 <h2>create your haiku</h2>
             : 
             <>

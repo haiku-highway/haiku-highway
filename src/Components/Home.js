@@ -125,6 +125,7 @@ const Home = () => {
             setUserInput("");
             // and let state know that the first word has been submitted
             setHasFirstWord(true);
+            document.querySelector(".userInput").classList.add("slide");
             // create new word buttons based on the new word
             populateWordButton(userInput, 0);
         // otherwise...

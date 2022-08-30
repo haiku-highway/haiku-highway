@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Header = () => {
     return (
         <header>
-            <h1><Link to='/'>haiku horizon.</Link></h1>
+            <h1><Link to='/'>haiku highway.</Link></h1>
             <nav>
                 <ul>
                     <li>

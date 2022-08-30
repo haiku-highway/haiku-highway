@@ -58,6 +58,7 @@ button {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
     
     font-family: inherit;
+    color: black;
 
     cursor: pointer;
     
@@ -76,7 +77,8 @@ form {
 
 
 input {
-    width: 300px;
+    max-width: 300px;
+    width: 100%;
     padding: 2.5px 0;
     border: none;
     border-bottom: 1.5px solid black;
@@ -107,6 +109,8 @@ input:focus {
     min-height: 550px;
     margin: 0 auto;
     background-size: cover;
+    margin-top: 30px;
+    margin-bottom: 100px;
 }
 
 /* Header Styles */
@@ -114,14 +118,15 @@ input:focus {
 header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 header ul {
     display: flex;
 }
 
-header li {
-    padding: 15px;
+header li:first-of-type {
+    padding-right: 30px;
 }
 
 header a:hover::before {
@@ -160,9 +165,10 @@ header a {
 /* How To */
 
 .largePaperText {
-    max-width: 600px;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
+    padding-bottom: 80px;
+    line-height: 1.25rem;
 }
 
 .largePaper h2 {
@@ -171,7 +177,7 @@ header a {
     text-align: center;
 }
 
-.howTo p {
+.largePaperText p {
     padding-bottom: 12px;
 }
 
@@ -181,17 +187,13 @@ header a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
 
+.credits h2 {
+    padding-bottom: 100px;
 }
 
 /* User Input */
-
-/* .userInput {
-    max-width: 600px;
-    width: 90%;
-    margin: 0 auto;
-
-} */
 
 .userInput {
     max-width: 600px;
@@ -203,16 +205,149 @@ header a {
     height: 135px;
     justify-content: space-between;
     margin-top: 25px;
-    margin-bottom: 100px;
+    margin-bottom: 75px;
     text-align: center;
-    transition: .5s;
+    /* transition: 2s; */
 }
 
-.slide {
-    height: auto !important;
+.userInput.slide {
+    height: 37px;
+    animation: slide .5s;
 }
 
 .userInput .errorMessage {
     bottom: -40px;
     width: 100%;
+}
+
+@keyframes slide {
+    from {
+        height: 135px;
+    }
+    to {
+        height: 37px;
+    }
+}
+
+.smallPaper {
+    background-image: url(../assets/torn-paper-1.png) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 600px;
+    width: 90%;
+    min-height: 330px;
+    margin: 0 auto;
+}
+
+.smallPaperText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    width: 100%;
+    padding: 25px 40px;
+}
+
+.smallPaperText p {
+    position: relative;
+    text-align: left;
+    font-size: 1.2rem;
+    padding-bottom: 8px;
+}
+
+.smallPaperText span {
+    position: absolute;
+    top: 5px;
+    left: -20px;
+}
+
+.wordButtonContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+
+.wordSelect {
+    margin-bottom: 100px;
+}
+
+.wordSelect .errorMessage {
+    margin-top: 20px;   
+    text-align: center;
+    top: -75px;
+    width: 100%;
+}
+
+.wordSelectFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.form {
+    position: relative;
+    width: 100%;
+}
+
+.form .errorMessage {
+    position: absolute;
+}
+
+/* Media Queries */
+
+@media (max-width: 500px) {
+    header {
+        flex-direction: column;
+        justify-content: left;
+        align-items: center;
+    }
+
+    h2 {
+        max-width: 270px;
+        font-size: 1.4rem;
+    }
+
+    .userInput {
+        margin-top: 60px;
+    }
+
+    .smallPaper {
+        width: 100%;
+    }
+
+    .smallPaperText p {
+        font-size: 0.9rem;
+        line-height: 1.2rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+    .largePaper {
+        width: 100%;
+    }
+
+    .largePaperText {
+        font-size: 0.9rem;
+        line-height: 1rem;
+    }
+
+    .largePaperText h2 {
+        margin: 0 auto;
+    }
+
+    .credits .largePaperText {
+        text-align: left;
+    }
 }
