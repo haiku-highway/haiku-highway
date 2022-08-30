@@ -10,7 +10,7 @@ import "./AppSecondary.css";
 const App = () => {
 	
 	return (
-        <div className="wrapper">
+    <div className='wrapper'>
 			<Header />
 			
 			<Routes>

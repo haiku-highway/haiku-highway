@@ -64,6 +64,13 @@ button {
     margin: 10px;
 } 
 
+.wrapper {
+    max-width: 1240px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+
 input {
     width: 300px;
     padding: 2.5px 0;
@@ -86,4 +93,87 @@ input:focus {
 
 .errorMessage {
     color: var(--error-color);
+}
+
+.largePaper {
+    background-image: url(../assets/large-torn-paper.png);
+    max-width: 920px;
+    width: 90%;
+    min-height: 550px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+header ul {
+    display: flex;
+}
+
+header li {
+    padding: 15px;
+}
+
+header a:hover::before {
+    content: ' * ';
+    width: 0;
+    position: absolute;
+    left: -15px;
+}
+
+header a {
+    position: relative;
+}
+
+/* Credits */
+
+.alix {
+    color: #C81B59;
+}
+
+.corey {
+    color: #087927;
+}
+
+.frances {
+    color: #803DEE;
+}
+
+.matt {
+    color: #B74518;
+}
+
+.juno {
+    color: #EA593E;
+}
+
+/* How To */
+
+.largePaperText {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.largePaper h2 {
+    padding-top: 50px;
+    padding-bottom: 35px;
+    text-align: center;
+}
+
+.howTo p {
+    padding-bottom: 12px;
+}
+
+/* Credits */
+
+.credits .largePaperText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 }
