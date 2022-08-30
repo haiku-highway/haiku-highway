@@ -9,7 +9,7 @@ import "./App.css";
 const App = () => {
 	
 	return (
-        <>
+        <div className='wrapper'>
 			<Header />
 			
 			<Routes>
@@ -17,7 +17,7 @@ const App = () => {
 				<Route path="/howto" element={ <HowTo /> } />
 				<Route path="/credits" element={ <Credits /> } />
 			</Routes>
-		</>
+		</div>
 	);
 };
 
