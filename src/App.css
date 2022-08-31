@@ -369,4 +369,17 @@ header a {
     .credits .largePaperText {
         text-align: left;
     }
+
+    .errorMessage {
+        font-size: .8rem;
+        line-height: 100%;
+    }
+
+    .userInput .errorMessage {
+        top: 50px;
+    }
+
+    .wordSelect .errorMessage {
+        top: -60px;
+    }
 }
