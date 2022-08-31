@@ -9,7 +9,7 @@ import "./App.min.css";
 const App = () => {
 	
 	return (
-    <div className='wrapper'>
+        <div className='wrapper'>
 			<Header />
 			
 			<Routes>
