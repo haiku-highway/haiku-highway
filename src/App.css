@@ -1,3 +1,4 @@
+/* VARIABLES */
 :root {
     --display-font: 'Special Elite', serif;
     --bg-color: #F0E9E2;
@@ -5,20 +6,15 @@
     --completed-color: #239F0F;
 }
 
+
+/* TYPOGRAPHY */
 html {
-    overflow-x: hidden;
+    font-size: 125%;
+    text-transform: lowercase;
 }
 
 body {
     font-family: var(--display-font);
-    background-color: var(--bg-color);
-}
-
-/* TYPOGRAPHY */
-
-html {
-    font-size: 125%;
-    text-transform: lowercase;
 }
 
 h1 {
@@ -39,60 +35,74 @@ input {
 
 /* BASE STYLES */
 
+html {
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+.wrapper {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
 a {
     color: inherit;
     text-decoration: none;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-}
-
 button {
-
     padding: 8px 15px 5px 15px;
     border: 1px solid black;
     border-top-width: 0.4px;
     border-left-width: 0.4px;
-
+    
     background-color: white;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
     
     font-family: inherit;
     color: black;
-
+    
     cursor: pointer;
     
     margin: 10px;
 } 
 
-.wrapper {
-    max-width: 1240px;
-    width: 90%;
-    margin: 0 auto;
+ul {
+    padding: 0;
+    list-style: none;
 }
 
 form {
+    width: 100%;
     position: relative;
 }
 
+form .errorMessage {
+    position: absolute;
+}
 
 input {
-    max-width: 300px;
     width: 100%;
+    max-width: 300px;
     padding: 2.5px 0;
     border: none;
     border-bottom: 1.5px solid black;
+
     background-color: transparent;
-    text-align: center;
+
     font-family: inherit;
+    text-align: center;
+
     transition: .1s;
 }
 
 input:focus {
-    outline: none;
     border-width: 3px;
+    outline: none;
 }
 
 .hide {
@@ -103,24 +113,26 @@ input:focus {
     color: var(--error-color);
 }
 
-.largePaper {
-    background-image: url(../assets/large-torn-paper.png);
-    background-repeat: no-repeat;
-    max-width: 920px;
-    width: 90%;
-    min-height: 550px;
-    margin: 0 auto;
-    background-size: cover;
-    margin-top: 30px;
-    margin-bottom: 100px;
-}
-
 .loadingIcon {
     width: 100%;
-    font-size: 1.6rem;
     margin-top: 50px;
 
+    font-size: 1.6rem;
+
     animation: spin 1.5s linear infinite;
+}
+
+.largePaper {
+    width: 90%;
+    max-width: 920px;
+    min-height: 550px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 100px;
+
+    background-image: url(../assets/large-torn-paper.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* Header Styles */
@@ -141,13 +153,111 @@ header li:first-of-type {
 
 header a:hover::before {
     content: ' * ';
-    width: 0;
     position: absolute;
     left: -15px;
+    width: 0;
 }
 
 header a {
     position: relative;
+}
+
+/* User Input */
+
+.userInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 600px;
+    height: 135px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 75px;
+
+    text-align: center;
+}
+
+.userInput.slide {
+    height: 37px;
+    animation: slide .5s;
+}
+
+.userInput .errorMessage {
+    bottom: -40px;
+    width: 100%;
+}
+
+/* Display Haiku */
+
+.smallPaper {
+    width: 90%;
+    max-width: 600px;
+    min-height: 330px;
+    margin: 0 auto;
+
+    background-image: url(../assets/torn-paper-1.png) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.smallPaperText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    width: 100%;
+    padding: 25px 40px;
+}
+
+.smallPaperText p {
+    position: relative;
+    padding-bottom: 8px;
+
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.smallPaperText span {
+    position: absolute;
+    top: 5px;
+    left: -20px;
+}
+
+/* Word Select */
+
+.wordButtonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.wordSelect {
+    margin-bottom: 100px;
+}
+
+.wordSelect .errorMessage {
+    top: -75px;
+    width: 100%;
+    margin-top: 20px;   
+    text-align: center;
+}
+
+.wordSelectFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    text-align: center;
+    line-height: 2rem;
 }
 
 /* Credits */
@@ -172,6 +282,25 @@ header a {
     color: #EA593E;
 }
 
+.datamuse {
+    color: #005acc;
+}
+
+.credits .largePaperText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.credits h2 {
+    padding-bottom: 100px;
+}
+
+.creditsContainer {
+    margin-top: 80px;
+}
+
+
 /* How To */
 
 .largePaperText {
@@ -191,45 +320,20 @@ header a {
     padding-bottom: 12px;
 }
 
-/* Credits */
 
-.credits .largePaperText {
+/* END STATE */
+.endBtnContainer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.credits h2 {
-    padding-bottom: 100px;
-}
-
-/* User Input */
-
-.userInput {
-    max-width: 600px;
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 135px;
-    justify-content: space-between;
-    margin-top: 25px;
-    margin-bottom: 75px;
-    text-align: center;
-    /* transition: 2s; */
-}
-
-.userInput.slide {
-    height: 37px;
-    animation: slide .5s;
-}
-
-.userInput .errorMessage {
-    bottom: -40px;
+    justify-content: center;
     width: 100%;
+    margin-top: 20px;
 }
 
+.endBtn {
+    height: 50px;
+}
+
+/* Animations */
 @keyframes slide {
     from {
         height: 135px;
@@ -248,98 +352,47 @@ header a {
     }
 }
 
-.smallPaper {
-    background-image: url(../assets/torn-paper-1.png) ;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-width: 600px;
-    width: 90%;
-    min-height: 330px;
-    margin: 0 auto;
-}
 
-.smallPaperText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-    width: 100%;
-    padding: 25px 40px;
-}
-
-.smallPaperText p {
-    position: relative;
-    text-align: left;
-    font-size: 1.2rem;
-    padding-bottom: 8px;
-}
-
-.smallPaperText span {
-    position: absolute;
-    top: 5px;
-    left: -20px;
-}
-
-.wordButtonContainer {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    
-}
-
-.wordSelect {
-    margin-bottom: 100px;
-}
-
-.wordSelect .errorMessage {
-    margin-top: 20px;   
-    text-align: center;
-    top: -75px;
-    width: 100%;
-}
-
-.wordSelectFormContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-    line-height: 2rem;
-}
-
-.form {
-    position: relative;
-    width: 100%;
-}
-
-.form .errorMessage {
-    position: absolute;
-}
 
 /* Media Queries */
-
 @media (max-width: 500px) {
+    /* BASE STYLES */
+    h2 {
+        max-width: 270px;
+        font-size: 1.4rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+    .errorMessage {
+        font-size: .8rem;
+        line-height: 100%;
+    }
+
+    /* HEADER */
     header {
         flex-direction: column;
         justify-content: left;
         align-items: center;
     }
 
-    h2 {
-        max-width: 270px;
-        font-size: 1.4rem;
-    }
-
+    /* USER INPUT */
     .userInput {
         margin-top: 60px;
     }
 
+    .userInput .errorMessage {
+        top: 50px;
+    }
+
+    /* WORD SELECT */
+    .wordSelect .errorMessage {
+        top: -60px;
+    }
+
+    /* DISPLAY HAIKU */
     .smallPaper {
         width: 100%;
     }
@@ -349,10 +402,8 @@ header a {
         line-height: 1.2rem;
     }
 
-    button {
-        font-size: 0.9rem;
-    }
 
+    /* CREDITS & HOWTO */
     .largePaper {
         width: 100%;
     }
@@ -368,18 +419,5 @@ header a {
 
     .credits .largePaperText {
         text-align: left;
-    }
-
-    .errorMessage {
-        font-size: .8rem;
-        line-height: 100%;
-    }
-
-    .userInput .errorMessage {
-        top: 50px;
-    }
-
-    .wordSelect .errorMessage {
-        top: -60px;
     }
 }

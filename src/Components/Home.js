@@ -3,7 +3,6 @@ import axios from "axios";
 import UserInput from "./UserInput";
 import DisplayHaiku from "./DisplayHaiku";
 import WordSelect from "./WordSelect";
-// import CompleteHaiku from './CompleteHaiku';
 
 import { FaSpinner } from 'react-icons/fa';
 
@@ -49,6 +48,9 @@ const Home = () => {
         // toggle the UserInput display based on this value
     const [hasFirstWord, setHasFirstWord] = useState(false);
     
+    // updates to true when the haiku is completed
+    const [isCompleted, setIsCompleted] = useState(false);
+
     // STEP 1
     // function to handle the user's form input
     const handleInputChange = (e) => {
@@ -250,6 +252,7 @@ const Home = () => {
 		if (syllableCount >= 17){
 			setCurrentLine(null);
             setWordButton([]);
+            setIsCompleted(true);
 			return;
 		} else if (syllableCount >= 12){
 			setCurrentLine(3);
@@ -284,6 +287,7 @@ const Home = () => {
                     handleInputChange={handleInputChange}
                     getSyllables={getSyllables}
                     hasFirstWord={hasFirstWord}
+                    isCompleted={isCompleted}
                 />
                 <DisplayHaiku 
                     haikuObject={haikuObject}
@@ -291,18 +295,19 @@ const Home = () => {
                 />
                 {
                     isLoading ?
-                    <FaSpinner className="loadingIcon" /> :
-                    <WordSelect
-                        userInput={userInput}
-                        isValid={isValid}
-                        tooManySyllables={tooManySyllables}
-                        handleInputChange={handleInputChange}
-                        getSyllables={getSyllables}
-                        handleWordButtonClick={handleWordButtonClick}
-                        wordButton={wordButton}
-                        noResults={noResults}
-                        isLoading={isLoading}
-                    />
+                        <FaSpinner className="loadingIcon" /> :
+                        <WordSelect
+                            userInput={userInput}
+                            isValid={isValid}
+                            tooManySyllables={tooManySyllables}
+                            handleInputChange={handleInputChange}
+                            getSyllables={getSyllables}
+                            handleWordButtonClick={handleWordButtonClick}
+                            wordButton={wordButton}
+                            noResults={noResults}
+                            isLoading={isLoading}
+                            isCompleted={isCompleted}
+                        />
                 }
             </main>
 		</>

@@ -10,11 +10,8 @@ const Header = () => {
                         <Link to='/howto'>how to</Link>
                     </li>
                     <li>
-                    <Link to='/credits'>credits</Link>
+                        <Link to='/credits'>credits</Link>
                     </li>
-                    {/* <li>
-                        <a href="#">saved haikus</a>
-                    </li> */}
                 </ul>
             </nav>
         </header>

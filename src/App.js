@@ -4,7 +4,7 @@ import HowTo from './Components/HowTo';
 import Credits from './Components/Credits';
 import { Routes, Route } from 'react-router-dom';
 
-import "./App.css";
+import "./App.min.css";
 
 const App = () => {
 	
