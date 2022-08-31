@@ -56,12 +56,13 @@ a {
 
 button {
     padding: 8px 15px 5px 15px;
-    border: 1px solid black;
-    border-top-width: 0.4px;
-    border-left-width: 0.4px;
+    border: 2px solid black;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-radius: 2px;
     
     background-color: white;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: .75px 1.5px .5px rgba(0,0,0,.4);
     
     font-family: inherit;
     color: black;
