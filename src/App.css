@@ -1,10 +1,12 @@
-@import url(./AppSecondary.css);
-
 :root {
     --display-font: 'Special Elite', serif;
     --bg-color: #F0E9E2;
     --error-color: #FF1717;
     --completed-color: #239F0F;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 body {
