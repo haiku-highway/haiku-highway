@@ -3,6 +3,7 @@ const Credits = () => {
         <section className="credits largePaper">
             <div className="largePaperText">
                 <h2>credits</h2>
+                <div className="creditsContainer">
                     <p>developed with datamuse api</p>
                     <p>
                         by{" "}
@@ -48,6 +49,7 @@ const Credits = () => {
                         juno college
                         </a>
                     </p>
+                </div>
             </div>
         </section>
     );

@@ -291,7 +291,7 @@ const Home = () => {
                 />
                 {
                     isLoading ?
-                    <FaSpinner /> :
+                    <FaSpinner className="loadingIcon" /> :
                     <WordSelect
                         userInput={userInput}
                         isValid={isValid}

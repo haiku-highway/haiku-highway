@@ -115,6 +115,14 @@ input:focus {
     margin-bottom: 100px;
 }
 
+.loadingIcon {
+    width: 100%;
+    font-size: 1.6rem;
+    margin-top: 50px;
+
+    animation: spin 1.5s linear infinite;
+}
+
 /* Header Styles */
 
 header {
@@ -228,6 +236,15 @@ header a {
     }
     to {
         height: 37px;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
 
