@@ -179,7 +179,7 @@ const Home = () => {
             method: "GET",
             dataResponse: "json",
             params: {
-                lc: mostRecentWord,
+                rel_trg: mostRecentWord,
                 md: "s",
             }
         }).then((result) => {
