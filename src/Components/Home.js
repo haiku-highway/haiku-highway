@@ -180,6 +180,7 @@ const Home = () => {
             dataResponse: "json",
             params: {
                 rel_trg: mostRecentWord,
+		lc: mostRecentWord,
                 md: "s",
             }
         }).then((result) => {
